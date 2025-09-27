@@ -27,6 +27,7 @@ export function Board() {
 
   return (
     <div style={{ padding: 8 }}>
+      <h1>Recipe Board</h1>
       <CreatePost />
       <br />
       <hr />
