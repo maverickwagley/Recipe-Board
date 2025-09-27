@@ -3,10 +3,12 @@ import {
   listPostsByAuthor,
   listPostsByTag,
   getPostById,
+  createPost,
+  updatePost,
+  deletePost,
 } from '../services/posts.js'
 
 export function postsRoutes(app) {
-
   //App Get Posts
   app.get('/api/v1/posts', async (req, res) => {
     const { sortBy, sortOrder, author, tag } = req.query
