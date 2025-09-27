@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+import { Post } from '../db/models/post.js'
 export function initDatabase() {
   const DATABASE_URL = process.env.DATABASE_URL
 
@@ -10,4 +10,6 @@ export function initDatabase() {
   const connection = mongoose.connect(DATABASE_URL)
 
   return connection
+
+  
 }
