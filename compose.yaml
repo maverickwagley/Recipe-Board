@@ -1,19 +1,19 @@
 version: '3.9'
 services:
-  blog-database:
+  board-database:
     image: mongo
     ports:
       - '27017:27017'
-  blog-backend:
+  board-backend:
     build: backend/
     environment:
       - PORT=3000
-      - DATABASE_URL=mongodb://blog-database:27017/blog
+      - DATABASE_URL=mongodb://board-database:27017/blog
     ports:
       - '3000:3000'
     depends_on:
-      - blog-database
-  blog-frontend:
+      - board-database
+  board-frontend:
     build:
       context: .
       args:
@@ -21,4 +21,4 @@ services:
     ports:
       - '3000:80'
     depends_on:
-      - blog-backend
+      - board-backend
