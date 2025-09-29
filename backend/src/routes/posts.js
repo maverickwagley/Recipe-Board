@@ -9,6 +9,7 @@ import {
 } from '../services/posts.js'
 import { requireAuth } from '../middleware/jwt.js'
 
+
 export function postsRoutes(app) {
   //App Get Posts
   app.get('/api/v1/posts', async (req, res) => {
