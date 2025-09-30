@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { describe, expect, test, beforeEach } from '@jest/globals' //Jest Functions
+import { describe, expect, test, beforeEach, beforeAll } from '@jest/globals' //Jest Functions
 import {
   createPost,
   listAllPosts,
@@ -9,20 +9,29 @@ import {
   updatePost,
   deletePost,
 } from '../services/posts.js' //Tests
+import { createUser } from '../services/users.js' //User Creation for Auth Tests
 import { Post } from '../db/models/post.js' //Post Schema
 
-//Sample Posts that will attempt to be created
-const samplePosts = [
-  { title: 'Learning Redux', author: 'Daniel Bugl', tags: ['redux'] },
-  { title: 'Learn React Hooks', author: 'Daniel Bugl', tags: ['react'] },
-  {
-    title: 'Full-Stack React Projects',
-    author: 'Daniel Bugl',
-    tags: ['react', 'nodejs'],
-  },
-  { title: 'Guide to TypeScript' },
-]
-//Array that will store successfully created posts
+let testUser = null
+let samplePosts = []
+beforeAll(async () => {
+  testUser = await createUser({ username: 'sample', password: 'user' })
+
+  samplePosts = [
+    { title: 'Learning Redux', author: testUser._id, tags: ['redux'] },
+
+    { title: 'Learn React Hooks', author: testUser._id, tags: ['react'] },
+
+    {
+      title: 'Full-Stack React Projects',
+
+      author: testUser._id,
+
+      tags: ['react', 'nodejs'],
+    },
+  ]
+})
+
 let createdSamplePosts = []
 
 //Post Creation
@@ -37,7 +46,6 @@ beforeEach(async () => {
     createdSamplePosts.push(await createdPost.save())
   }
 })
-
 
 //Test Getting a Post
 describe('getting a post', () => {
@@ -57,17 +65,17 @@ describe('getting a post', () => {
 //Test Updating a Post
 describe('updating posts', () => {
   test('should update the specified property', async () => {
-    await updatePost(createdSamplePosts[0]._id, {
-      author: 'Test Author',
+    await updatePost(testUser._id, createdSamplePosts[0]._id, {
+      contents: 'This is updated content',
     })
 
     const updatedPost = await Post.findById(createdSamplePosts[0]._id)
 
-    expect(updatedPost.author).toEqual('Test Author')
+    expect(updatedPost.contents).toEqual('This is updated content')
   })
 
   test('should not update other properties', async () => {
-    await updatePost(createdSamplePosts[0]._id, {
+    await updatePost(testUser._id, createdSamplePosts[0]._id, {
       author: 'Test Author',
     })
 
@@ -77,7 +85,7 @@ describe('updating posts', () => {
   })
 
   test('should update the updatedAt timestamp', async () => {
-    await updatePost(createdSamplePosts[0]._id, {
+    await updatePost(testUser._id, createdSamplePosts[0]._id, {
       author: 'Test Author',
     })
 
@@ -89,7 +97,7 @@ describe('updating posts', () => {
   })
 
   test('should fail if the id does not exist', async () => {
-    const post = await updatePost('000000000000000000000000', {
+    const post = await updatePost(testUser._id, '000000000000000000000000', {
       author: 'Test Author',
     })
 
@@ -100,7 +108,7 @@ describe('updating posts', () => {
 //Test Deleting a Post
 describe('deleting posts', () => {
   test('should remove the post from the database', async () => {
-    const result = await deletePost(createdSamplePosts[0]._id)
+    const result = await deletePost(testUser._id, createdSamplePosts[0]._id)
 
     expect(result.deletedCount).toEqual(1)
 
@@ -153,7 +161,7 @@ describe('listing posts', () => {
   })
 
   test('should be able to filter posts by author', async () => {
-    const posts = await listPostsByAuthor('Daniel Bugl')
+    const posts = await listPostsByAuthor(testUser.username)
 
     expect(posts.length).toBe(3)
   })
@@ -171,14 +179,12 @@ describe('creating posts', () => {
     const post = {
       title: 'Hello Mongoose!',
 
-      author: 'Huseyin Ergin',
-
       contents: 'This post is stored in a MongoDB database using Mongoose.',
 
       tags: ['mongoose', 'mongodb'],
     }
 
-    const createdPost = await createPost(post)
+    const createdPost = await createPost(testUser._id, post)
 
     expect(createdPost._id).toBeInstanceOf(mongoose.Types.ObjectId)
 
@@ -201,7 +207,7 @@ describe('creating posts', () => {
     }
 
     try {
-      await createPost(post)
+      await createPost(testUser._id, post)
     } catch (err) {
       expect(err).toBeInstanceOf(mongoose.Error.ValidationError)
 
@@ -214,7 +220,7 @@ describe('creating posts', () => {
       title: 'Only a title',
     }
 
-    const createdPost = await createPost(post)
+    const createdPost = await createPost(testUser._id, post)
 
     expect(createdPost._id).toBeInstanceOf(mongoose.Types.ObjectId)
   })
