@@ -6,16 +6,15 @@ import { createPost } from '../api/posts.js'
 export function CreatePost() {
   const [title, setTitle] = useState('')
   const [contents, setContents] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const [token] = useAuth()
   const queryClient = useQueryClient()
   const createPostMutation = useMutation({
-    mutationFn: () => createPost(token, { title, contents }),
-
+    mutationFn: () => createPost(token, { title, contents, imageUrl }),
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   })
   const handleSubmit = (e) => {
     e.preventDefault()
-
     createPostMutation.mutate()
   }
 
@@ -34,6 +33,16 @@ export function CreatePost() {
         />
       </div>
       <br />
+      <div>
+        <label htmlFor='create-image-url'>Image URL: </label>
+        <input
+          type='url'
+          name='create-image-url'
+          id='create-image-url'
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+      </div>
       <br />
       <textarea
         value={contents}
