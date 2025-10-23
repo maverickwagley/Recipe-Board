@@ -69,7 +69,7 @@ export const routes = [
   
   //View Single Post Page
   {
-    path: '/posts/:postId',
+    path: '/posts/:postId/:slug?',
 
     loader: async ({ params }) => {
       const postId = params.postId
