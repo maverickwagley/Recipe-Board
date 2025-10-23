@@ -14,8 +14,8 @@ COPY . .
 
 RUN npm run build 
 
-FROM nginx AS final 
+EXPOSE 3000 
 
-WORKDIR /usr/share/nginx/html 
+# Start the SSR server 
 
-COPY --from=build /build/dist . 
+CMD ["npm", "start"]
