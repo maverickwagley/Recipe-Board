@@ -2,6 +2,7 @@ import { PostList } from '../components/PostList.jsx'
 import { CreatePost } from '../components/CreatePost.jsx'
 import { PostFilter } from '../components/PostFilter.jsx'
 import { Header } from '../components/Header.jsx'
+import { Helmet } from 'react-helmet-async'
 import { PostSorting } from '../components/PostSorting.jsx'
 import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '../api/posts.js'
@@ -21,6 +22,9 @@ export function Board() {
 
   return (
     <div style={{ padding: 8 }}>
+      <Helmet>
+        <title>Recipe Board</title>
+      </Helmet>
       <Header />
       <br />
       <hr />
