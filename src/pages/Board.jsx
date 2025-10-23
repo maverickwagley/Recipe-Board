@@ -1,7 +1,7 @@
 import { PostList } from '../components/PostList.jsx'
 import { CreatePost } from '../components/CreatePost.jsx'
 import { PostFilter } from '../components/PostFilter.jsx'
-import { Header } from '../components/Header.jsx' 
+import { Header } from '../components/Header.jsx'
 import { PostSorting } from '../components/PostSorting.jsx'
 import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '../api/posts.js'
@@ -14,7 +14,6 @@ export function Board() {
 
   const postsQuery = useQuery({
     queryKey: ['posts', { author, sortBy, sortOrder }],
-
     queryFn: () => getPosts({ author, sortBy, sortOrder }),
   })
 
@@ -22,9 +21,9 @@ export function Board() {
 
   return (
     <div style={{ padding: 8 }}>
-      <Header /> 
-      <br /> 
-      <hr /> 
+      <Header />
+      <br />
+      <hr />
       <CreatePost />
       <br />
       <hr />
