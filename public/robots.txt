@@ -1,2 +1,3 @@
 User-agent: * 
 Allow: / 
+Sitemap: https://vigilant-goggles-xgg9gppqppghvxx9-5173.app.github.dev/sitemap.xml
