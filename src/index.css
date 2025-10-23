@@ -1,1 +1,17 @@
+/* Post image styles */
+.post-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
 
+.post-image--thumb {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.post-image--full {
+  max-height: 400px;
+  object-fit: contain;
+}

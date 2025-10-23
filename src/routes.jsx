@@ -2,8 +2,9 @@ import { Board } from './pages/Board.jsx'
 import { Signup } from './pages/Signup.jsx'
 import { Login } from './pages/Login.jsx'
 import { useLoaderData } from 'react-router-dom'
-import { getPosts } from './api/posts.js'
+import { getPosts, getPostById } from './api/posts.js'
 import { getUserInfo } from './api/users.js'
+import { ViewPost } from './pages/ViewPost.jsx'
 import {
   QueryClient,
   dehydrate,
@@ -11,7 +12,8 @@ import {
 } from '@tanstack/react-query'
 
 export const routes = [
-  {
+  //Main Board Page
+{
     path: '/',
 
     loader: async () => {
@@ -52,15 +54,54 @@ export const routes = [
     },
   },
 
+  //Signup Page
   {
     path: '/signup',
 
     element: <Signup />,
   },
 
+  //Login Page
   {
     path: '/login',
-
     element: <Login />,
+  },
+  
+  //View Single Post Page
+  {
+    path: '/posts/:postId',
+
+    loader: async ({ params }) => {
+      const postId = params.postId
+
+      const queryClient = new QueryClient()
+
+      const post = await getPostById(postId)
+
+      await queryClient.prefetchQuery({
+        queryKey: ['post', postId],
+
+        queryFn: () => post,
+      })
+
+      if (post?.author) {
+        await queryClient.prefetchQuery({
+          queryKey: ['users', post.author],
+
+          queryFn: () => getUserInfo(post.author),
+        })
+      }
+
+      return { dehydratedState: dehydrate(queryClient), postId }
+    },
+    Component() {
+      const { dehydratedState, postId } = useLoaderData()
+
+      return (
+        <HydrationBoundary state={dehydratedState}>
+          <ViewPost postId={postId} />
+        </HydrationBoundary>
+      )
+    },
   },
 ]
