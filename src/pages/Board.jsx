@@ -24,6 +24,10 @@ export function Board() {
     <div style={{ padding: 8 }}>
       <Helmet>
         <title>Recipe Board</title>
+        <meta
+          name='description'
+          content='A site to share recipes.'
+        />
       </Helmet>
       <Header />
       <br />

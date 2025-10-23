@@ -15,11 +15,22 @@ export function ViewPost({ postId }) {
 
   const post = postQuery.data
 
+  function truncate(str, max = 160) {
+    if (!str) return str
+
+    if (str.length > max) {
+      return str.slice(0, max - 3) + '...'
+    } else {
+      return str
+    }
+  }
+
   return (
     <div style={{ padding: 8 }}>
       {post && (
         <Helmet>
           <title>{post.title} | Recipe Board</title>
+          <meta name='description' content={truncate(post.contents)} />
         </Helmet>
       )}
       <Header />
