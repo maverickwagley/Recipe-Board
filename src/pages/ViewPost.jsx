@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { postTrackEvent } from '../api/events.js'
 import { Header } from '../components/Header.jsx'
 import { Post } from '../components/Post.jsx'
 import { getPostById } from '../api/posts.js'
@@ -8,22 +10,50 @@ import { getUserInfo } from '../api/users.js'
 import { Helmet } from 'react-helmet-async'
 
 export function ViewPost({ postId }) {
+  const [session, setSession] = useState()
+
+  // Mutation to track events
+  const trackEventMutation = useMutation({
+    mutationFn: (action) => postTrackEvent({ postId, action, session }),
+
+    onSuccess: (data) => setSession(data?.session),
+  })
+
+  // Track view start and end
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      trackEventMutation.mutate('startView')
+
+      timeout = null
+    }, 1000)
+
+    return () => {
+      if (timeout) clearTimeout(timeout)
+      else trackEventMutation.mutate('endView')
+    }
+  }, [])
+
+  // Fetch post data
   const postQuery = useQuery({
     queryKey: ['post', postId],
 
     queryFn: () => getPostById(postId),
   })
 
+  // Fallback to null to avoid errors while loading
   const post = postQuery.data
 
+  // Fetch author info
   const userInfoQuery = useQuery({
     queryKey: ['users', post?.author],
     queryFn: () => getUserInfo(post?.author),
     enabled: Boolean(post?.author),
   })
 
+  // Fallback to empty object to avoid errors while loading
   const userInfo = userInfoQuery.data ?? {}
 
+  // Helper to truncate long descriptions
   function truncate(str, max = 160) {
     if (!str) return str
 
