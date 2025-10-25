@@ -1,0 +1,5 @@
+{
+  "schema": "https://vigilant-goggles-xgg9gppqppghvxx9-3000.app.github.dev/graphql",
+
+  "documents": "src/api/graphql/**/*.{js,jsx}"
+}
