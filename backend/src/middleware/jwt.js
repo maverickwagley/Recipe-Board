@@ -5,3 +5,9 @@ export const requireAuth = expressjwt({
 
   algorithms: ['HS256'],
 })
+
+export const optionalAuth = expressjwt({
+  secret: () => process.env.JWT_SECRET,
+  algorithms: ['HS256'],
+  credentialsRequired: false,
+})
