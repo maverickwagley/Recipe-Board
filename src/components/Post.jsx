@@ -7,7 +7,7 @@ export function Post({
   title,
   contents,
   author,
-  _id,
+  id,
   fullPost = false,
   imageUrl,
 }) {
@@ -21,7 +21,7 @@ export function Post({
       {fullPost ? (
         <h3>{title}</h3>
       ) : (
-        <Link to={`/posts/${_id}/${slug(title)}`}>
+        <Link to={`/posts/${id}/${slug(title)}`}>
           <h3>{title}</h3>
         </Link>
       )}
@@ -36,7 +36,7 @@ export function Post({
               onError={handleImageError}
             />
           ) : (
-            <Link to={`/posts/${_id}`}>
+            <Link to={`/posts/${id}`}>
               <img
                 className='post-image post-image--thumb'
                 src={imageUrl}
@@ -63,7 +63,7 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   contents: PropTypes.string,
   author: PropTypes.string,
-  _id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   fullPost: PropTypes.bool,
   imageUrl: PropTypes.string,
 }
