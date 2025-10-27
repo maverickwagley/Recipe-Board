@@ -6,9 +6,9 @@ import {
   createPost,
   updatePost,
   deletePost,
+  likePost,
 } from '../services/posts.js'
 import { requireAuth } from '../middleware/jwt.js'
-
 
 export function postsRoutes(app) {
   //App Get Posts
@@ -91,6 +91,19 @@ export function postsRoutes(app) {
       return res.status(204).end()
     } catch (err) {
       console.error('error deleting post', err)
+
+      return res.status(500).end()
+    }
+  })
+
+  //App Like Post
+  app.post('/api/v1/posts/:id/like', async (req, res) => {
+    try {
+      const post = await likePost(req.params.id)
+
+      return res.json(post)
+    } catch (err) {
+      console.error('error liking post', err)
 
       return res.status(500).end()
     }

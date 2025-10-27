@@ -25,3 +25,14 @@ export const createPost = async (token, post) => {
 
   return await res.json()
 }
+
+export const likePost = async (postId) => {
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/posts/${postId}/like`,
+    {
+      method: 'POST',
+    },
+  )
+
+  return await res.json()
+}

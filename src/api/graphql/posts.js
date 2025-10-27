@@ -5,6 +5,7 @@ export const POST_FIELDS = gql`
     id
     title
     contents
+    likes
     tags
     updatedAt
     createdAt

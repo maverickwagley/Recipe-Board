@@ -9,6 +9,7 @@ const postSchema = new Schema(
     contents: String,
     imageUrl: String,
     tags: [String],
+    likes: { type: Number, default: 0 },
   },
 
   { timestamps: true },
