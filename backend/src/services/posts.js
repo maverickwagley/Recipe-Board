@@ -10,7 +10,14 @@ async function listPosts(
   query = {},
   { sortBy = 'createdAt', sortOrder = 'descending' } = {},
 ) {
-  return await Post.find(query).sort({ [sortBy]: sortOrder })
+  // normalize sortOrder coming from the UI to mongoose-friendly values
+  // accepted values: 'ascending' | 'descending' (UI) -> 'asc' | 'desc' or 1 | -1 for mongoose
+  const order =
+    sortOrder === 'ascending' || sortOrder === 'asc' || sortOrder === 1
+      ? 'asc'
+      : 'desc'
+
+  return await Post.find(query).sort({ [sortBy]: order })
 }
 
 export async function listAllPosts(options) {

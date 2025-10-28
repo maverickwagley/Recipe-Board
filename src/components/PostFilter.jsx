@@ -17,8 +17,6 @@ export function PostFilter({ field, value, onChange }) {
 
 PostFilter.propTypes = {
   field: PropTypes.string.isRequired,
-
   value: PropTypes.string.isRequired,
-
   onChange: PropTypes.func.isRequired,
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import './ViewPost.css'
 import PropTypes from 'prop-types'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
@@ -82,19 +83,32 @@ export function ViewPost({ postId }) {
         </Helmet>
       )}
       <Header />
-      <br />
-      <hr />
-      <Link to='/'>Back to main page</Link>
-      <br />
-      <hr />
-      {post ? (
-        <div>
-          <Post {...post} fullPost id={postId} author={userInfo} />
-          <hr /> <PostStats postId={postId} />
+      <div className='view-post-container'>
+        <div className='view-post-card'>
+          <Link to='/' className='view-post-back'>
+            ← Back to main page
+          </Link>
+
+          {post ? (
+            <div>
+              <h1 className='view-post-title'>{post.title}</h1>
+              <div className='view-post-meta'>
+                By {userInfo.username || 'Unknown author'} •{' '}
+                {new Date(post.createdAt).toLocaleString()}
+              </div>
+
+              {/* Use the existing Post component for the content and image */}
+              <Post {...post} fullPost id={postId} author={userInfo} />
+
+              <div style={{ marginTop: 18 }}>
+                <PostStats postId={postId} />
+              </div>
+            </div>
+          ) : (
+            <div>{`Post with id ${postId} not found.`}</div>
+          )}
         </div>
-      ) : (
-        `Post with id ${postId} not found.`
-      )}
+      </div>
     </div>
   )
 }

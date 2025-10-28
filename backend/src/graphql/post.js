@@ -10,6 +10,8 @@ contents: String
 tags: [String!] 
 createdAt: Float 
 updatedAt: Float 
+imageUrl: String
+likes: Int
 } 
 
 `

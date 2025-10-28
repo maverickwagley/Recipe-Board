@@ -39,12 +39,8 @@ export function PostSorting({
 
 PostSorting.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.string).isRequired,
-
   value: PropTypes.string.isRequired,
-
   onChange: PropTypes.func.isRequired,
-
   orderValue: PropTypes.string.isRequired,
-
   onOrderChange: PropTypes.func.isRequired,
 }

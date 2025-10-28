@@ -1,0 +1,90 @@
+/* Styles for the ViewPost page */
+.view-post-container {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+.view-post-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(22, 28, 37, 0.08);
+  border: 1px solid rgba(22, 28, 37, 0.06);
+}
+
+.view-post-back {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #2b6cb0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.view-post-back:hover {
+  text-decoration: underline;
+}
+
+.view-post-title {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+  color: #111827;
+}
+
+.view-post-meta {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.post-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.post-image--full {
+  max-height: 520px;
+}
+
+.post-content {
+  margin-top: 14px;
+  color: #111827;
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.like-button {
+  background: #efefef;
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.like-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .view-post-container {
+    padding: 12px;
+    margin: 12px;
+  }
+
+  .view-post-title {
+    font-size: 1.4rem;
+  }
+}
