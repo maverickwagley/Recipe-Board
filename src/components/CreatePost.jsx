@@ -15,15 +15,15 @@ export function CreatePost() {
   const [imageUrl, setImageUrl] = useState('')
   const [token] = useAuth()
   const [createPost, { loading, data }] = useGraphQLMutation(CREATE_POST, {
-    variables: { title, contents },
-
     context: { headers: { Authorization: `Bearer ${token}` } },
 
+    // refetch the list queries after creating a post
     refetchQueries: [GET_POSTS, GET_POSTS_BY_AUTHOR],
   })
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    createPost()
+    createPost({ variables: { title, contents, imageUrl } })
   }
 
   if (!token) return <div>Please log in to create new posts.</div>

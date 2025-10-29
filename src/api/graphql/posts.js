@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client/core/index.js'
-
+// GraphQL queries and mutations for posts
 export const POST_FIELDS = gql`
   fragment PostFields on Post {
     id
@@ -34,8 +34,18 @@ export const GET_POSTS_BY_AUTHOR = gql`
 `
 
 export const CREATE_POST = gql`
-  mutation createPost($title: String!, $contents: String, $tags: [String!]) {
-    createPost(title: $title, contents: $contents, tags: $tags) {
+  mutation createPost(
+    $title: String!
+    $contents: String
+    $tags: [String!]
+    $imageUrl: String
+  ) {
+    createPost(
+      title: $title
+      contents: $contents
+      tags: $tags
+      imageUrl: $imageUrl
+    ) {
       id
       title
     }

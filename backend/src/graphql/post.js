@@ -1,5 +1,6 @@
 import { getUserInfoById } from '../services/users.js'
 
+// GraphQL schema and resolvers for posts
 export const postSchema = `#graphql 
 
 type Post { 
