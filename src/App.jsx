@@ -3,6 +3,8 @@ import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { HelmetProvider } from 'react-helmet-async'
 import { ApolloProvider } from '@apollo/client/react/index.js'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core/index.js'
+import { io } from 'socket.io-client'
+const socket = io(import.meta.env.VITE_SOCKET_HOST)
 import PropTypes from 'prop-types'
 
 const queryClient = new QueryClient()
@@ -10,6 +12,13 @@ const queryClient = new QueryClient()
 const apolloClient = new ApolloClient({
   uri: import.meta.env.VITE_GRAPHQL_URL,
   cache: new InMemoryCache(),
+})
+socket.on('connect', () => {
+  console.log('connected to socket.io as', socket.id)
+})
+
+socket.on('connect_error', (err) => {
+  console.error('socket.io connect error:', err)
 })
 
 export function App({ children }) {
