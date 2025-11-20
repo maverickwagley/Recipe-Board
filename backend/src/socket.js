@@ -8,6 +8,7 @@ export function handleSocket(io) {
 
     socket.on('chat.message', (message) => {
       console.log(`${socket.id}: ${message}`)
+      io.emit('chat.message', { username: socket.id, message })
     })
   })
 }

@@ -16,10 +16,37 @@ const apolloClient = new ApolloClient({
 socket.on('connect', () => {
   console.log('connected to socket.io as', socket.id)
   socket.emit('chat.message', 'hello from client')
+
+  // Request notification permission on connect (if not already decided)
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission().then((permission) => {
+      console.log('Notification permission:', permission)
+    })
+  }
 })
 
 socket.on('connect_error', (err) => {
   console.error('socket.io connect error:', err)
+})
+socket.on('chat.message', (msg) => {
+  console.log(`${msg.username}: ${msg.message}`)
+})
+
+// Listen for new post notifications
+socket.on('newPost', (postData) => {
+  console.log('New post created:', postData)
+
+  // Show browser notification if permission granted
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('New Recipe Posted! 🍳', {
+      body: `"${postData.title}" has been added to the board`,
+      icon: '/favicon.ico',
+      tag: 'new-post',
+    })
+  } else {
+    // Fallback: show alert popup
+    alert(`New post created: "${postData.title}"`)
+  }
 })
 
 export function App({ children }) {

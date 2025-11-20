@@ -59,4 +59,4 @@ io.on('connection', (socket) => {
 
 })*/
 
-export { server as app }
+export { server as app, io }

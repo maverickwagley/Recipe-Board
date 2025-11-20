@@ -1,6 +1,7 @@
 import { GraphQLError } from 'graphql'
 import { createUser, loginUser } from '../services/users.js'
 import { createPost } from '../services/posts.js'
+import { io } from '../app.js'
 
 export const mutationSchema = `#graphql 
 type Mutation { 
@@ -37,12 +38,21 @@ export const mutationResolver = {
         )
       }
 
-      return await createPost(auth.sub, {
+      const newPost = await createPost(auth.sub, {
         title,
         contents,
         tags,
         imageUrl,
       })
+
+      // Notify all connected clients about the new post
+      io.emit('newPost', {
+        id: newPost._id,
+        title: newPost.title,
+        author: auth.sub,
+      })
+
+      return newPost
     },
   },
 }
