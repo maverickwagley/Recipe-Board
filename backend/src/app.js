@@ -21,26 +21,6 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-apolloServer.start().then(() =>
-  app.use(
-    '/graphql',
-    optionalAuth,
-    expressMiddleware(apolloServer, {
-      context: async ({ req }) => {
-        return { auth: req.auth }
-      },
-    }),
-  ),
-)
-
-postsRoutes(app)
-userRoutes(app)
-eventRoutes(app)
-
-app.get('/', (req, res) => {
-  res.send('Hello from Express Nodemon!')
-})
-
 const server = createServer(app)
 
 const io = new Server(server, {
@@ -49,14 +29,25 @@ const io = new Server(server, {
   },
 })
 handleSocket(io)
-/*
-io.on('connection', (socket) => {
-  console.log('user connected:', socket.id)
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected:', socket.id)
+apolloServer.start().then(() => {
+  app.use(
+    '/graphql',
+    optionalAuth,
+    expressMiddleware(apolloServer, {
+      context: async ({ req }) => {
+        return { auth: req.auth, io }
+      },
+    }),
+  )
+
+  postsRoutes(app, io)
+  userRoutes(app)
+  eventRoutes(app)
+
+  app.get('/', (req, res) => {
+    res.send('Hello from Express Nodemon!')
   })
+})
 
-})*/
-
-export { server as app, io }
+export { server as app }

@@ -9,9 +9,8 @@ import {
   likePost,
 } from '../services/posts.js'
 import { requireAuth } from '../middleware/jwt.js'
-import { io } from '../app.js'
 
-export function postsRoutes(app) {
+export function postsRoutes(app, io) {
   //App Get Posts
   app.get('/api/v1/posts', async (req, res) => {
     const { sortBy, sortOrder, author, tag } = req.query
@@ -62,6 +61,11 @@ export function postsRoutes(app) {
       const post = await createPost(req.auth.sub, req.body)
 
       // Notify all connected clients about the new post
+      console.log('Emitting newPost event:', {
+        id: post._id,
+        title: post.title,
+        author: req.auth.sub,
+      })
       io.emit('newPost', {
         id: post._id,
         title: post.title,
