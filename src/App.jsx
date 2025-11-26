@@ -67,12 +67,14 @@ socket.on('newPost', (postData) => {
 // Custom toast notification function
 function showToast(postData) {
   const toast = document.createElement('div')
+
+  //Styling
   toast.style.cssText = `
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #1f2937;
-    color: white;
+    background: white;
+    color: black;
     padding: 16px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -81,9 +83,8 @@ function showToast(postData) {
     max-width: 350px;
     animation: slideIn 0.3s ease-out;
   `
-
   toast.innerHTML = `
-    <div style="font-weight: bold; margin-bottom: 4px;">New Recipe Posted! 🍳</div>
+    <div style="font-weight: bold; margin-bottom: 4px;">New Recipe Posted!</div>
     <div style="font-size: 14px; opacity: 0.9;">"${postData.title}" has been added</div>
     <div style="font-size: 12px; opacity: 0.7; margin-top: 8px;">Click to view</div>
   `
@@ -98,6 +99,7 @@ function showToast(postData) {
   `
   document.head.appendChild(style)
 
+  //When Clicked, navigate to the post
   toast.onclick = () => {
     window.location.href = `/posts/${postData.id}`
   }
