@@ -18,7 +18,9 @@ MongoDB
 
 JWT
 
-Socket.IO / WebSockets
+WebSockets
+
+Socket.IO
 
 Jest
 
@@ -40,9 +42,9 @@ CI/CD workflow automation
 
 Features
 
-User authentication with JWT
+User authentication and authorization using JWT
 
-Create and manage recipes
+Create, edit, and manage recipes
 
 Share recipes with other users
 
@@ -54,7 +56,7 @@ User statistics and activity tracking
 
 Server-side rendering
 
-SEO-friendly meta tags and sitemaps
+SEO meta tags and sitemaps
 
 Automated testing with Jest
 
@@ -62,44 +64,77 @@ Docker containerization
 
 CI/CD automation
 
-What This Project Demonstrates
+Project Goals
 
-Building a full MERN stack application
+This project was built to demonstrate the development of a modern full-stack MERN application.
+
+The application demonstrates:
+
+Building and structuring a MERN stack application
 
 Creating and managing authenticated user content
 
-Working with MongoDB and data relationships
+Working with MongoDB data relationships and aggregation
 
-Implementing real-time communication
+Implementing JWT-based authentication
+
+Using WebSockets for real-time communication
+
+Implementing real-time notifications
 
 Using server-side rendering
 
-Implementing SEO practices
+Implementing SEO practices with meta tags and sitemaps
 
-Testing with Jest
+Measuring and tracking user statistics
+
+Writing automated tests with Jest
 
 Using modern development tools and workflows
 
-Containerizing and deploying an application with Docker
+Containerizing an application with Docker
 
-Setting up CI/CD automation
+Using Docker Hub for container management
+
+Automating development and deployment with CI/CD
 
 Getting Started
-
-Clone the repository:
-
+Clone the Repository
 git clone <repository-url>
+cd <repository-name>
 
-Install dependencies:
-
+Install Dependencies
 npm install
 
-Create your environment variables and configure MongoDB and JWT.
+Environment Variables
 
-Start the application:
+Create a .env file and add the required environment variables for MongoDB, JWT, and other application configuration.
 
+Example:
+
+MONGODB_URI=
+JWT_SECRET=
+PORT=
+
+Run the Application
 npm run dev
 
-Project Goal
+Testing
 
-The goal of this project is to demonstrate full-stack web development skills and modern software development practices, including development, testing, deployment, authentication, real-time communication, and CI/CD.
+Tests are written using Jest.
+
+npm test
+
+Development
+
+The project uses ESLint and Prettier for code quality and formatting. Husky and Commitlint are used to enforce consistent Git workflows and commit messages.
+
+CI/CD workflows are used to automate testing, validation, and deployment.
+
+Deployment
+
+The application can be containerized using Docker and Docker images can be managed through Docker Hub.
+
+Purpose
+
+The purpose of this project is to demonstrate full-stack development skills through a complete web application while applying modern practices for authentication, database management, testing, real-time communication, SEO, containerization, and deployment.
