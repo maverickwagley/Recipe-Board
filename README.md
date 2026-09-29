@@ -102,17 +102,4 @@ This project demonstrates:
   
 - Applying modern testing, deployment, and development practices
   
- 
 
-## Installation
-
- 
-
-```bash
-git clone https://github.com/yourusername/recipe-sharing-app.git
-cd recipe-sharing-app
-npm install
-npm run dev
-```
-
-``
